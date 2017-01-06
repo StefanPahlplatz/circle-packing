@@ -21,6 +21,7 @@ namespace CirclePackingAnimator
         private bool randomPos;
         private bool randomCol;
         private bool clearOnChange = true;
+        private bool fill;
 
         public Form1()
         {
@@ -58,7 +59,8 @@ namespace CirclePackingAnimator
         {
             circles.Add(new Circle(randomPos ? r.Next(WIDTH) : WIDTH / 2, 
                 randomPos ? r.Next(HEIGHT) : HEIGHT / 2, 
-                randomCol ? Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)) : Color.White));
+                randomCol ? Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)) : Color.White, 
+                fill));
         }
 
         // Draw event
@@ -127,10 +129,17 @@ namespace CirclePackingAnimator
             clearOnChange = cb_ClearOnChange.Checked;
         }
 
+        // Clear the screen
         private void ClearScreen()
         {
             circles.Clear();
             drawingSurface.Invalidate();
+        }
+
+        // Update fill
+        private void cb_Fill_CheckedChanged(object sender, EventArgs e)
+        {
+            fill = cb_Fill.Checked;
         }
     }
 }

@@ -37,6 +37,7 @@
             this.trackBar_Speed = new System.Windows.Forms.TrackBar();
             this.cb_RandomColour = new System.Windows.Forms.CheckBox();
             this.cb_RandomPos = new System.Windows.Forms.CheckBox();
+            this.cb_Fill = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.drawingSurface)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Speed)).BeginInit();
@@ -54,6 +55,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cb_Fill);
             this.groupBox1.Controls.Add(this.cb_ClearOnChange);
             this.groupBox1.Controls.Add(this.cb_CreateCircles);
             this.groupBox1.Controls.Add(this.tb_Speed);
@@ -144,6 +146,17 @@
             this.cb_RandomPos.UseVisualStyleBackColor = true;
             this.cb_RandomPos.CheckedChanged += new System.EventHandler(this.cb_RandomPos_CheckedChanged);
             // 
+            // cb_Fill
+            // 
+            this.cb_Fill.AutoSize = true;
+            this.cb_Fill.Location = new System.Drawing.Point(6, 111);
+            this.cb_Fill.Name = "cb_Fill";
+            this.cb_Fill.Size = new System.Drawing.Size(38, 17);
+            this.cb_Fill.TabIndex = 7;
+            this.cb_Fill.Text = "Fill";
+            this.cb_Fill.UseVisualStyleBackColor = true;
+            this.cb_Fill.CheckedChanged += new System.EventHandler(this.cb_Fill_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +185,7 @@
         private System.Windows.Forms.TextBox tb_Speed;
         private System.Windows.Forms.CheckBox cb_CreateCircles;
         private System.Windows.Forms.CheckBox cb_ClearOnChange;
+        private System.Windows.Forms.CheckBox cb_Fill;
     }
 }
 
