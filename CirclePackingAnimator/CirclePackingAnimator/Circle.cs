@@ -53,6 +53,21 @@ namespace CirclePackingAnimator
             }
         }
 
+        public void CheckCollision(Circle other)
+        {
+            if (other != this)
+            {
+                float deltaX = Math.Abs(this.x - other.x);
+                float deltaY = Math.Abs(this.y - other.y);
+                double dist = Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
+
+                if (dist - 1 < this.r + other.r)
+                {
+                    this.growing = false;
+                }                
+            }
+        }
+
         // Checks if the circel is hitting the edge
         private bool AtEdge()
         {

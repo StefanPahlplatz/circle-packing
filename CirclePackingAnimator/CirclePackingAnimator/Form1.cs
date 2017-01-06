@@ -20,8 +20,9 @@ namespace CirclePackingAnimator
 
         private bool randomPos;
         private bool randomCol;
-        private bool clearOnChange = true;
         private bool fill;
+        private bool clearOnChange = true;
+        private bool allowOverlap = false;
 
         public Form1()
         {
@@ -32,11 +33,13 @@ namespace CirclePackingAnimator
             circles = new List<Circle>();
             r = new Random();
 
+            // Init FPS timer
             fpsTimer = new Timer();
             fpsTimer.Interval = 1;
             fpsTimer.Tick += Timer_Tick;
             fpsTimer.Enabled = true;
 
+            // Init new circle timer
             newCircleTimer = new Timer();
             newCircleTimer.Interval = int.Parse(tb_Speed.Text);
             newCircleTimer.Tick += NewCircle_Tick;
@@ -46,6 +49,12 @@ namespace CirclePackingAnimator
         // Main timer
         private void Timer_Tick(object sender, EventArgs e)
         {
+            // Check collisions
+            if (!allowOverlap)
+            foreach (Circle c1 in circles)
+                foreach (Circle c2 in circles)
+                    c1.CheckCollision(c2);
+
             // Grow circles
             foreach (Circle c in circles)
                 c.Grow();
@@ -69,9 +78,7 @@ namespace CirclePackingAnimator
             e.Graphics.DrawImage(bm, 0, 0);
 
             foreach (Circle c in circles)
-            {
                 c.Render(e.Graphics);
-            }
         }
 
         // Adjust speed in trackbar
@@ -140,6 +147,18 @@ namespace CirclePackingAnimator
         private void cb_Fill_CheckedChanged(object sender, EventArgs e)
         {
             fill = cb_Fill.Checked;
+
+            if (clearOnChange)
+                ClearScreen();
+        }
+
+        // Update allow overlap
+        private void cb_Overlap_CheckedChanged(object sender, EventArgs e)
+        {
+            allowOverlap = cb_Overlap.Checked;
+
+            if (clearOnChange)
+                ClearScreen();
         }
     }
 }
