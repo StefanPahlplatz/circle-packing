@@ -30,12 +30,13 @@
         {
             this.drawingSurface = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cb_ClearOnChange = new System.Windows.Forms.CheckBox();
+            this.cb_CreateCircles = new System.Windows.Forms.CheckBox();
             this.tb_Speed = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.trackBar_Speed = new System.Windows.Forms.TrackBar();
             this.cb_RandomColour = new System.Windows.Forms.CheckBox();
             this.cb_RandomPos = new System.Windows.Forms.CheckBox();
-            this.cb_CreateCircles = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.drawingSurface)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Speed)).BeginInit();
@@ -53,6 +54,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cb_ClearOnChange);
             this.groupBox1.Controls.Add(this.cb_CreateCircles);
             this.groupBox1.Controls.Add(this.tb_Speed);
             this.groupBox1.Controls.Add(this.label1);
@@ -61,14 +63,38 @@
             this.groupBox1.Controls.Add(this.cb_RandomPos);
             this.groupBox1.Location = new System.Drawing.Point(859, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(137, 179);
+            this.groupBox1.Size = new System.Drawing.Size(137, 322);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
+            // cb_ClearOnChange
+            // 
+            this.cb_ClearOnChange.AutoSize = true;
+            this.cb_ClearOnChange.Checked = true;
+            this.cb_ClearOnChange.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_ClearOnChange.Location = new System.Drawing.Point(6, 88);
+            this.cb_ClearOnChange.Name = "cb_ClearOnChange";
+            this.cb_ClearOnChange.Size = new System.Drawing.Size(104, 17);
+            this.cb_ClearOnChange.TabIndex = 6;
+            this.cb_ClearOnChange.Text = "Clear on change";
+            this.cb_ClearOnChange.UseVisualStyleBackColor = true;
+            this.cb_ClearOnChange.CheckedChanged += new System.EventHandler(this.cb_ClearOnChange_CheckedChanged);
+            // 
+            // cb_CreateCircles
+            // 
+            this.cb_CreateCircles.AutoSize = true;
+            this.cb_CreateCircles.Location = new System.Drawing.Point(6, 19);
+            this.cb_CreateCircles.Name = "cb_CreateCircles";
+            this.cb_CreateCircles.Size = new System.Drawing.Size(90, 17);
+            this.cb_CreateCircles.TabIndex = 5;
+            this.cb_CreateCircles.Text = "Create circles";
+            this.cb_CreateCircles.UseVisualStyleBackColor = true;
+            this.cb_CreateCircles.CheckedChanged += new System.EventHandler(this.cb_CreateCircles_CheckedChanged);
+            // 
             // tb_Speed
             // 
-            this.tb_Speed.Location = new System.Drawing.Point(93, 105);
+            this.tb_Speed.Location = new System.Drawing.Point(93, 152);
             this.tb_Speed.Name = "tb_Speed";
             this.tb_Speed.Size = new System.Drawing.Size(38, 20);
             this.tb_Speed.TabIndex = 4;
@@ -78,7 +104,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 108);
+            this.label1.Location = new System.Drawing.Point(6, 155);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(81, 13);
             this.label1.TabIndex = 3;
@@ -86,7 +112,7 @@
             // 
             // trackBar_Speed
             // 
-            this.trackBar_Speed.Location = new System.Drawing.Point(12, 124);
+            this.trackBar_Speed.Location = new System.Drawing.Point(12, 171);
             this.trackBar_Speed.Maximum = 1000;
             this.trackBar_Speed.Minimum = 1;
             this.trackBar_Speed.Name = "trackBar_Speed";
@@ -118,17 +144,6 @@
             this.cb_RandomPos.UseVisualStyleBackColor = true;
             this.cb_RandomPos.CheckedChanged += new System.EventHandler(this.cb_RandomPos_CheckedChanged);
             // 
-            // cb_CreateCircles
-            // 
-            this.cb_CreateCircles.AutoSize = true;
-            this.cb_CreateCircles.Location = new System.Drawing.Point(6, 19);
-            this.cb_CreateCircles.Name = "cb_CreateCircles";
-            this.cb_CreateCircles.Size = new System.Drawing.Size(90, 17);
-            this.cb_CreateCircles.TabIndex = 5;
-            this.cb_CreateCircles.Text = "Create circles";
-            this.cb_CreateCircles.UseVisualStyleBackColor = true;
-            this.cb_CreateCircles.CheckedChanged += new System.EventHandler(this.cb_CreateCircles_CheckedChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,6 +171,7 @@
         private System.Windows.Forms.TrackBar trackBar_Speed;
         private System.Windows.Forms.TextBox tb_Speed;
         private System.Windows.Forms.CheckBox cb_CreateCircles;
+        private System.Windows.Forms.CheckBox cb_ClearOnChange;
     }
 }
 

@@ -20,10 +20,12 @@ namespace CirclePackingAnimator
 
         private bool randomPos;
         private bool randomCol;
+        private bool clearOnChange = true;
 
         public Form1()
         {
             InitializeComponent();
+
             bm = new Bitmap(WIDTH, HEIGHT);
             graphics = Graphics.FromImage(bm);
             circles = new List<Circle>();
@@ -83,25 +85,52 @@ namespace CirclePackingAnimator
             {
                 trackBar_Speed.Value = int.Parse(tb_Speed.Text);
                 newCircleTimer.Interval = trackBar_Speed.Value;
+
+                if (clearOnChange)
+                    ClearScreen();
             }
             else
-                MessageBox.Show("Value not valid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Value not valid!", "Error", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
         }
 
         // Toggle the generation of circles
         private void cb_CreateCircles_CheckedChanged(object sender, EventArgs e)
         {
             newCircleTimer.Enabled = cb_CreateCircles.Checked;
+
+            if (clearOnChange)
+                ClearScreen();
         }
 
+        // Update randomPos
         private void cb_RandomPos_CheckedChanged(object sender, EventArgs e)
         {
-            randomPos = true;
+            randomPos = cb_RandomPos.Checked;
+
+            if (clearOnChange)
+                ClearScreen();
         }
 
+        // Update randomCol
         private void cb_RandomColour_CheckedChanged(object sender, EventArgs e)
         {
-            randomCol = true;
+            randomCol = cb_RandomColour.Checked;
+
+            if (clearOnChange)
+                ClearScreen();
+        }
+
+        // Update clearOnChecked
+        private void cb_ClearOnChange_CheckedChanged(object sender, EventArgs e)
+        {
+            clearOnChange = cb_ClearOnChange.Checked;
+        }
+
+        private void ClearScreen()
+        {
+            circles.Clear();
+            drawingSurface.Invalidate();
         }
     }
 }
