@@ -7,7 +7,6 @@ namespace CirclePackingAnimator
     public class Circle
     {
         private static float DEFAULT_RADIUS = 4;
-        private static float INCREASE_SIZE = 0.5f;
 
         private readonly float x;
         private readonly float y;
@@ -17,6 +16,7 @@ namespace CirclePackingAnimator
         private readonly bool fill;
         private readonly int width;
         private readonly int height;
+        private readonly float growSpeed;
 
         private Circle()
         {
@@ -24,14 +24,16 @@ namespace CirclePackingAnimator
             growing = true;
         }
 
-        public Circle(float x, float y, Color c, bool fill, int max_width, int max_height) : this()
+        public Circle(float x, float y, Color c, bool fill, int max_width, int max_height, 
+            float growSpeed) : this()
         {
             this.x = x;
             this.y = y;
             this.c = c;
             this.fill = fill;
-            width = max_width;
-            height = max_height;
+            this.width = max_width;
+            this.height = max_height;
+            this.growSpeed = growSpeed;
         }
 
         // Draw the circel
@@ -51,7 +53,7 @@ namespace CirclePackingAnimator
                 if (AtEdge())
                     growing = false;
                 else
-                    r += INCREASE_SIZE;
+                    r += growSpeed;
             }
         }
 

@@ -57,6 +57,9 @@
             this.tt_Amount_TrackBar = new System.Windows.Forms.ToolTip(this.components);
             this.tt_Amount_Tb = new System.Windows.Forms.ToolTip(this.components);
             this.grpBox_Timers = new System.Windows.Forms.GroupBox();
+            this.tb_GrowSpeed = new System.Windows.Forms.TextBox();
+            this.trackBar_GrowSpeed = new System.Windows.Forms.TrackBar();
+            this.label6 = new System.Windows.Forms.Label();
             this.tt_ShowBorders = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.drawingSurface)).BeginInit();
             this.grpBox_Settings.SuspendLayout();
@@ -66,6 +69,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Speed)).BeginInit();
             this.grpBox_Picture.SuspendLayout();
             this.grpBox_Timers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_GrowSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // drawingSurface
@@ -288,7 +292,7 @@
             this.tb_Speed.Name = "tb_Speed";
             this.tb_Speed.Size = new System.Drawing.Size(38, 20);
             this.tb_Speed.TabIndex = 4;
-            this.tb_Speed.Text = "500";
+            this.tb_Speed.Text = "16";
             this.tb_Speed.TextChanged += new System.EventHandler(this.tb_Speed_TextChanged);
             // 
             // label1
@@ -318,7 +322,7 @@
             this.grpBox_Picture.Controls.Add(this.tb_Path);
             this.grpBox_Picture.Controls.Add(this.label3);
             this.grpBox_Picture.Controls.Add(this.cb_CustomPicture);
-            this.grpBox_Picture.Location = new System.Drawing.Point(859, 379);
+            this.grpBox_Picture.Location = new System.Drawing.Point(859, 442);
             this.grpBox_Picture.Name = "grpBox_Picture";
             this.grpBox_Picture.Size = new System.Drawing.Size(137, 66);
             this.grpBox_Picture.TabIndex = 4;
@@ -356,6 +360,9 @@
             // 
             // grpBox_Timers
             // 
+            this.grpBox_Timers.Controls.Add(this.tb_GrowSpeed);
+            this.grpBox_Timers.Controls.Add(this.trackBar_GrowSpeed);
+            this.grpBox_Timers.Controls.Add(this.label6);
             this.grpBox_Timers.Controls.Add(this.trackBar_Speed);
             this.grpBox_Timers.Controls.Add(this.label1);
             this.grpBox_Timers.Controls.Add(this.tb_Speed);
@@ -364,10 +371,38 @@
             this.grpBox_Timers.Controls.Add(this.label2);
             this.grpBox_Timers.Location = new System.Drawing.Point(859, 251);
             this.grpBox_Timers.Name = "grpBox_Timers";
-            this.grpBox_Timers.Size = new System.Drawing.Size(137, 122);
+            this.grpBox_Timers.Size = new System.Drawing.Size(137, 185);
             this.grpBox_Timers.TabIndex = 5;
             this.grpBox_Timers.TabStop = false;
             this.grpBox_Timers.Text = "Timers";
+            // 
+            // tb_GrowSpeed
+            // 
+            this.tb_GrowSpeed.Location = new System.Drawing.Point(93, 117);
+            this.tb_GrowSpeed.Name = "tb_GrowSpeed";
+            this.tb_GrowSpeed.ReadOnly = true;
+            this.tb_GrowSpeed.Size = new System.Drawing.Size(38, 20);
+            this.tb_GrowSpeed.TabIndex = 14;
+            this.tb_GrowSpeed.Text = "1";
+            // 
+            // trackBar_GrowSpeed
+            // 
+            this.trackBar_GrowSpeed.AutoSize = false;
+            this.trackBar_GrowSpeed.Location = new System.Drawing.Point(12, 143);
+            this.trackBar_GrowSpeed.Name = "trackBar_GrowSpeed";
+            this.trackBar_GrowSpeed.Size = new System.Drawing.Size(104, 31);
+            this.trackBar_GrowSpeed.TabIndex = 12;
+            this.trackBar_GrowSpeed.Value = 1;
+            this.trackBar_GrowSpeed.Scroll += new System.EventHandler(this.trackBar_GrowSpeed_Scroll);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 120);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "Grow speed:";
             // 
             // Form1
             // 
@@ -392,6 +427,7 @@
             this.grpBox_Picture.PerformLayout();
             this.grpBox_Timers.ResumeLayout(false);
             this.grpBox_Timers.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_GrowSpeed)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -426,6 +462,9 @@
         private System.Windows.Forms.GroupBox grpBox_Timers;
         private System.Windows.Forms.CheckBox cb_ShowBorders;
         private System.Windows.Forms.ToolTip tt_ShowBorders;
+        private System.Windows.Forms.TextBox tb_GrowSpeed;
+        private System.Windows.Forms.TrackBar trackBar_GrowSpeed;
+        private System.Windows.Forms.Label label6;
     }
 }
 

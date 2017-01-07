@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -12,12 +14,12 @@ namespace CirclePackingAnimator
         private const int MAX_HEIGHT = 729;
 
         private Bitmap bm;
-        private Bitmap image;
         private Graphics graphics;
         private List<Circle> circles;
         private Timer fpsTimer;
         private Timer newCircleTimer;
         private Random r;
+        private Color[,] imageData;
 
         private bool randomPos;
         private bool randomCol;
@@ -32,6 +34,7 @@ namespace CirclePackingAnimator
         private int amountPerTick;
         private int width;
         private int height;
+        private float growSpeed;
 
         #region Constructor
         public Form1()
@@ -49,6 +52,7 @@ namespace CirclePackingAnimator
             amountPerTick = trackBar_AmountPerTick.Value;
             width = (int)nud_Width.Value;
             height = (int)nud_Height.Value;
+            growSpeed = Convert.ToSingle(trackBar_GrowSpeed.Value / 10f);
 
             // Init FPS timer
             fpsTimer = new Timer();
@@ -104,7 +108,7 @@ namespace CirclePackingAnimator
                     for (int i = 0; i < amountPerTick; i++)
                     {
                         // If we're stuck in the loop
-                        if (attempts > 10000)
+                        if (attempts > amountPerTick * newCircleTimer.Interval * 1000)
                         {
                             Console.WriteLine("Done");
                             done = true;
@@ -121,13 +125,13 @@ namespace CirclePackingAnimator
                         else if (!randomCol && !usePicture)
                             colour = Color.White;
                         else if (usePicture)
-                            if (image != null)
-                                colour = image.GetPixel((int)x, (int)y);
+                            if (imageData != null)
+                                colour = imageData[(int)x, (int)y];
                         
                             
 
                         // Create a random circle
-                        Circle circle = new Circle(x, y, colour, fill, width, height);
+                        Circle circle = new Circle(x, y, colour, fill, width, height, growSpeed);
 
                         // Check collision
                         bool noCollision = true;
@@ -266,9 +270,18 @@ namespace CirclePackingAnimator
             {
                 imagePath = openFileDialog.FileName;
                 tb_Path.Text = imagePath;
-                image = new Bitmap(imagePath);
+                Bitmap image = new Bitmap(imagePath);
                 width = image.Width;
                 height = image.Height;
+
+                imageData = new Color[width, height];
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        imageData[x, y] = image.GetPixel(x, y);
+                    }
+                }
 
             }
         }
@@ -327,5 +340,12 @@ namespace CirclePackingAnimator
             drawBorders = cb_ShowBorders.Checked;
         }
         #endregion
+
+        private void trackBar_GrowSpeed_Scroll(object sender, EventArgs e)
+        {
+            tb_GrowSpeed.Text = trackBar_GrowSpeed.Value.ToString();
+            growSpeed = Convert.ToSingle(trackBar_GrowSpeed.Value / 10f);
+            Console.WriteLine(growSpeed);
+        }
     }
 }
