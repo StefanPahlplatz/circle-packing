@@ -1,6 +1,6 @@
 # CirclePacking
 Circle packing application that animates the process!
-Inspired by [Daniel Shiffman](https://www.google.com)
+Inspired by [Daniel Shiffman](https://www.youtube.com/user/shiffman).
 
 ## Features
 - Generate random patterns
