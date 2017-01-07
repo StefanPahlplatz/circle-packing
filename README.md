@@ -19,7 +19,9 @@ Inspired by [Daniel Shiffman](https://www.google.com)
 
 ## Examples
 Random generated pattern:
+
 ![alt text](https://cloud.githubusercontent.com/assets/23485653/21742584/381f5620-d4f2-11e6-885d-b5ab40780349.png "Random generated pattern!")
 
 Cloning an existing image:
+
 ![alt text](https://cloud.githubusercontent.com/assets/23485653/21742605/9f5ce0dc-d4f2-11e6-87ef-0b267133f10d.png "Cloned from an existing image!")
