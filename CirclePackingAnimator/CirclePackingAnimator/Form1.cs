@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -10,11 +8,10 @@ namespace CirclePackingAnimator
 {
     public partial class Form1 : Form
     {
-        private const int MAX_WIDTH = 853;
-        private const int MAX_HEIGHT = 729;
+        private readonly int MAX_WIDTH;
+        private readonly int MAX_HEIGHT;
 
         private Bitmap bm;
-        private Graphics graphics;
         private List<Circle> circles;
         private Timer fpsTimer;
         private Timer newCircleTimer;
@@ -36,23 +33,23 @@ namespace CirclePackingAnimator
         private int height;
         private float growSpeed;
 
-        #region Constructor
         public Form1()
         {
             InitializeComponent();
 
-            // Create instances
-            bm = new Bitmap(MAX_WIDTH, MAX_HEIGHT);
-            graphics = Graphics.FromImage(bm);
-            circles = new List<Circle>();
-            r = new Random();
-
             // Default values
+            MAX_WIDTH = drawingSurface.Width;
+            MAX_HEIGHT = drawingSurface.Height;
             clearOnChange = true;
             amountPerTick = trackBar_AmountPerTick.Value;
             width = (int)nud_Width.Value;
             height = (int)nud_Height.Value;
             growSpeed = Convert.ToSingle(trackBar_GrowSpeed.Value / 10f);
+
+            // Create instances
+            bm = new Bitmap(MAX_WIDTH, MAX_HEIGHT);
+            circles = new List<Circle>();
+            r = new Random();
 
             // Init FPS timer
             fpsTimer = new Timer();
@@ -73,7 +70,6 @@ namespace CirclePackingAnimator
             tt_Amount_Tb.SetToolTip(tb_AmountPerTick, "Amount of circles to generate per tick.");
             tt_ShowBorders.SetToolTip(cb_ShowBorders, "Toggels the outline of the borders. Does not trigger 'Clear On Change'.");
         }
-        #endregion
 
         #region Timers
         // Main timer
@@ -81,13 +77,16 @@ namespace CirclePackingAnimator
         {
             // Check collisions
             if (!allowOverlap)
-            foreach (Circle c1 in circles)
-                foreach (Circle c2 in circles)
-                    c1.IsCollision(c2);
-
-            // Grow circles
-            foreach (Circle c in circles)
-                c.Grow();
+            {
+                foreach (Circle c1 in circles)
+                {
+                    foreach (Circle c2 in circles)
+                    {
+                        c1.IsCollision(c2);
+                    }
+                    c1.Grow();
+                }
+            }
 
             // Update the display
             drawingSurface.Invalidate();
@@ -116,46 +115,51 @@ namespace CirclePackingAnimator
                             return;
                         }
 
-                        float x = randomPos ? r.Next(width) : width / 2;
-                        float y = randomPos ? r.Next(height) : height / 2;
-
-                        Color colour = Color.White;
-                        if (randomCol && !usePicture)
-                            colour = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
-                        else if (!randomCol && !usePicture)
-                            colour = Color.White;
-                        else if (usePicture)
-                            if (imageData != null)
-                                colour = imageData[(int)x, (int)y];
-                        
-                            
-
-                        // Create a random circle
-                        Circle circle = new Circle(x, y, colour, fill, width, height, growSpeed);
-
-                        // Check collision
-                        bool noCollision = true;
-                        if (!allowOverlap)
-                        {
-                            foreach (Circle c2 in circles)
-                            {
-                                if (circle.IsCollision(c2))
-                                {
-                                    noCollision = false;
-                                    i--;
-                                    attempts++;
-                                }
-                            }
-                        }
-
-                        if (noCollision)
-                            circles.Add(circle);
+                        AddCircle(ref attempts);
                     }
                     drawing = false;
                 }
             }
         }
         #endregion
+
+        private void AddCircle(ref int attempts)
+        {
+            // Create the circle
+            float x = randomPos ? r.Next(width) : width / 2;
+            float y = randomPos ? r.Next(height) : height / 2;
+
+            Color colour = Color.White;
+            if (randomCol && !usePicture)
+                colour = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
+            else if (!randomCol && !usePicture)
+                colour = Color.White;
+            else if (usePicture)
+                if (imageData != null)
+                    colour = imageData[(int)x, (int)y];
+
+
+
+            // Create a random circle
+            Circle circle = new Circle(x, y, colour, fill, width, height, growSpeed);
+
+            // Check collision
+            bool noCollision = true;
+            if (!allowOverlap)
+            {
+                foreach (Circle c2 in circles)
+                {
+                    if (circle.IsCollision(c2))
+                    {
+                        noCollision = false;
+                        attempts++;
+                    }
+                }
+            }
+
+            if (noCollision)
+                circles.Add(circle);
+        }
 
         #region Draw
         // Draw event
@@ -295,6 +299,7 @@ namespace CirclePackingAnimator
                 ClearScreen();
         }
 
+        // Update amount per tick
         private void trackBar_AmountPerTick_ValueChanged(object sender, EventArgs e)
         {
             tb_AmountPerTick.Text = (trackBar_AmountPerTick.Value).ToString();
@@ -339,13 +344,31 @@ namespace CirclePackingAnimator
         {
             drawBorders = cb_ShowBorders.Checked;
         }
-        #endregion
 
+        // Update grow speed
         private void trackBar_GrowSpeed_Scroll(object sender, EventArgs e)
         {
             tb_GrowSpeed.Text = trackBar_GrowSpeed.Value.ToString();
             growSpeed = Convert.ToSingle(trackBar_GrowSpeed.Value / 10f);
-            Console.WriteLine(growSpeed);
+
+            if (clearOnChange)
+                ClearScreen();
+        }
+        #endregion
+
+        private void btn_Save_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + 
+                "\\CirclePackingImage.png";
+
+            Image bmp = new Bitmap(width, height);
+            var gg = Graphics.FromImage(bmp);
+            var rect = drawingSurface.RectangleToScreen(drawingSurface.ClientRectangle);
+            gg.CopyFromScreen(rect.Location, Point.Empty, drawingSurface.Size);
+
+            bmp.Save(path);
+
+            MessageBox.Show("Image saved!", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

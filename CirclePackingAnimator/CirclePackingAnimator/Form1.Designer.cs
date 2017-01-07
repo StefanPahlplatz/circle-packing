@@ -61,6 +61,7 @@
             this.trackBar_GrowSpeed = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
             this.tt_ShowBorders = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_Save = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.drawingSurface)).BeginInit();
             this.grpBox_Settings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Height)).BeginInit();
@@ -404,11 +405,22 @@
             this.label6.TabIndex = 13;
             this.label6.Text = "Grow speed:";
             // 
+            // btn_Save
+            // 
+            this.btn_Save.Location = new System.Drawing.Point(859, 514);
+            this.btn_Save.Name = "btn_Save";
+            this.btn_Save.Size = new System.Drawing.Size(137, 23);
+            this.btn_Save.TabIndex = 6;
+            this.btn_Save.Text = "Save image";
+            this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.Controls.Add(this.btn_Save);
             this.Controls.Add(this.grpBox_Timers);
             this.Controls.Add(this.grpBox_Picture);
             this.Controls.Add(this.grpBox_Settings);
@@ -465,6 +477,7 @@
         private System.Windows.Forms.TextBox tb_GrowSpeed;
         private System.Windows.Forms.TrackBar trackBar_GrowSpeed;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btn_Save;
     }
 }
 
