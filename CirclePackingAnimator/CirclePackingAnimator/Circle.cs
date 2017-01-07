@@ -8,15 +8,15 @@ namespace CirclePackingAnimator
     {
         private static float DEFAULT_RADIUS = 2;
         private static float INCREASE_SIZE = 0.5f;
-        private static int WIDTH = 853;
-        private static int HEIGHT = 729;
 
-        private float x;
-        private float y;
+        private readonly float x;
+        private readonly float y;
         private float r;
-        private Color c;
+        private readonly Color c;
         private bool growing;
-        private bool fill;
+        private readonly bool fill;
+        private readonly int width;
+        private readonly int height;
 
         private Circle()
         {
@@ -24,12 +24,14 @@ namespace CirclePackingAnimator
             growing = true;
         }
 
-        public Circle(float x, float y, Color c, bool fill) : this()
+        public Circle(float x, float y, Color c, bool fill, int max_width, int max_height) : this()
         {
             this.x = x;
             this.y = y;
             this.c = c;
             this.fill = fill;
+            width = max_width;
+            height = max_height;
         }
 
         // Draw the circel
@@ -53,7 +55,7 @@ namespace CirclePackingAnimator
             }
         }
 
-        public void CheckCollision(Circle other)
+        public bool IsCollision(Circle other)
         {
             if (other != this)
             {
@@ -64,14 +66,16 @@ namespace CirclePackingAnimator
                 if (dist - 1 < this.r + other.r)
                 {
                     this.growing = false;
-                }                
+                    return true;
+                }
             }
+            return false;
         }
 
         // Checks if the circel is hitting the edge
         private bool AtEdge()
         {
-            return x + r > WIDTH - 1|| x - r < 0 || y + r > HEIGHT - 1|| y - r < 0;
+            return x + r > width - 1|| x - r < 0 || y + r > height - 1|| y - r < 0;
         }
     }
 }
