@@ -6,7 +6,7 @@ namespace CirclePackingAnimator
 {
     public class Circle
     {
-        private static float DEFAULT_RADIUS = 2;
+        private static float DEFAULT_RADIUS = 4;
         private static float INCREASE_SIZE = 0.5f;
 
         private readonly float x;
@@ -55,6 +55,7 @@ namespace CirclePackingAnimator
             }
         }
 
+        // Checks for a collision with the other circle
         public bool IsCollision(Circle other)
         {
             if (other != this)

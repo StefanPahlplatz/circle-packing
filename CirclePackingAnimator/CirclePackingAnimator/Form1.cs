@@ -12,6 +12,7 @@ namespace CirclePackingAnimator
         private const int MAX_HEIGHT = 729;
 
         private Bitmap bm;
+        private Bitmap image;
         private Graphics graphics;
         private List<Circle> circles;
         private Timer fpsTimer;
@@ -111,11 +112,22 @@ namespace CirclePackingAnimator
                             return;
                         }
 
+                        float x = randomPos ? r.Next(width) : width / 2;
+                        float y = randomPos ? r.Next(height) : height / 2;
+
+                        Color colour = Color.White;
+                        if (randomCol && !usePicture)
+                            colour = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
+                        else if (!randomCol && !usePicture)
+                            colour = Color.White;
+                        else if (usePicture)
+                            if (image != null)
+                                colour = image.GetPixel((int)x, (int)y);
+                        
+                            
+
                         // Create a random circle
-                        Circle circle = new Circle(randomPos ? r.Next(width) : width / 2,
-                            randomPos ? r.Next(height) : height / 2,
-                            randomCol ? Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)) : Color.White,
-                            fill, width, height);
+                        Circle circle = new Circle(x, y, colour, fill, width, height);
 
                         // Check collision
                         bool noCollision = true;
@@ -254,6 +266,10 @@ namespace CirclePackingAnimator
             {
                 imagePath = openFileDialog.FileName;
                 tb_Path.Text = imagePath;
+                image = new Bitmap(imagePath);
+                width = image.Width;
+                height = image.Height;
+
             }
         }
 
@@ -271,6 +287,7 @@ namespace CirclePackingAnimator
             tb_AmountPerTick.Text = (trackBar_AmountPerTick.Value).ToString();
         }
 
+        // Update amount per tick
         private void tb_AmountPerTick_TextChanged(object sender, EventArgs e)
         {
             if (Regex.IsMatch(tb_AmountPerTick.Text, @"^(\d+)$"))
@@ -286,6 +303,7 @@ namespace CirclePackingAnimator
                     MessageBoxIcon.Error);
         }
 
+        // Update width
         private void nud_Width_ValueChanged(object sender, EventArgs e)
         {
             width = (int)nud_Width.Value;
@@ -294,6 +312,7 @@ namespace CirclePackingAnimator
                 ClearScreen();
         }
 
+        // Update height
         private void nud_Height_ValueChanged(object sender, EventArgs e)
         {
             height = (int)nud_Height.Value;
@@ -302,6 +321,7 @@ namespace CirclePackingAnimator
                 ClearScreen();
         }
 
+        // Toggle borders
         private void cb_ShowBorders_CheckedChanged(object sender, EventArgs e)
         {
             drawBorders = cb_ShowBorders.Checked;
